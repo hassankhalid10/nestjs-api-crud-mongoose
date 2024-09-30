@@ -1,38 +1,38 @@
 // Import necessary modules from NestJS
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { Module } from '@nestjs/common';  // Basic module decorator from NestJS
+import { MongooseModule } from '@nestjs/mongoose';  // Mongoose module for connecting to MongoDB
 
 // Import controllers and services from your project
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ProductsModule } from './products/products.module';
-import { BlogsModule } from './blogs/blogs.module';
-import { TasksModule } from './tasks/tasks.module';
+import { AppController } from './app.controller';  // Controller for handling requests and responses
+import { AppService } from './app.service';  // Service that handles business logic
+import { ProductsModule } from './products/products.module';  // Module for product-related logic
+import { BlogsModule } from './blogs/blogs.module';  // Module for blog-related logic
+import { TasksModule } from './tasks/tasks.module';  // Module for task-related logic
+import { JobsModule } from './jobs/jobs.module';  // Module for job-related logic
 
 // Define a NestJS module using the @Module decorator
 @Module({
-  // Specify the modules that this module depends on using the imports property.
-  // Import ProductsModule, BlogsModule, and TasksModule. These modules likely contain their own controllers and services.
+  // The imports array defines other modules that this module depends on
+  // Here, we import the modules for Products, Blogs, Tasks, and Jobs. Each module likely handles specific functionality.
   imports: [
     ProductsModule,
     BlogsModule,
     TasksModule,
-    
-    // Configure the MongooseModule to connect to a MongoDB database.
-    // MongooseModule.forRoot() method takes the MongoDB connection URL as its argument.
+    JobsModule,
+    // Configure MongoDB connection using MongooseModule.forRoot(), connecting to a local MongoDB database.
     MongooseModule.forRoot(
-      'mongodb://127.0.0.1:27017/Nestjscrud'
+      'mongodb://127.0.0.1:27017/Nestjscrud'  // MongoDB connection URL (using local server)
     ),
   ],
 
-  // Specify the controllers that are part of this module.
-  // In this case, there's only one controller, AppController.
+  // The controllers array defines the controllers responsible for handling incoming HTTP requests.
+  // In this case, only AppController is included.
   controllers: [AppController],
 
-  // Specify the providers (services) that are part of this module.
-  // In this case, there's only one provider, AppService.
+  // The providers array defines the services (business logic handlers) for the module.
+  // AppService is the only service listed here.
   providers: [AppService],
 })
 
-// Export the AppModule class so that it can be used in other parts of your application.
+// Export the AppModule class to be used by the NestJS framework
 export class AppModule {}
